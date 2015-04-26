@@ -92,20 +92,6 @@
             <configuration>
               <tarLongFileMode>gnu</tarLongFileMode>
             </configuration>
-            <executions>
-              <execution>
-                <id>assemble-fatjar</id>
-                <configuration>
-                  <descriptorRefs>
-                    <descriptorRef>jar-with-dependencies</descriptorRef>
-                  </descriptorRefs>
-                </configuration>
-                <phase>package</phase>
-                <goals>
-                  <goal>single</goal>
-                </goals>
-              </execution>
-            </executions>
         </plugin>
 
         <!-- disable surefire -->
