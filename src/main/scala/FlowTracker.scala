@@ -72,6 +72,17 @@ class FlowTracker(val flow: Flow[_], val runCompleted: AtomicBoolean, val hostPo
   // manages global job state for this run
   val flowStatus = new FlowStatus(flow)
 
+  // UGLY. I wish, we had a more cleaner way to shutdown. TODO: Refactor FlowTracker for single entry and exit points
+  Runtime.getRuntime.addShutdownHook(new Thread("FlowTracker-ShutdownHook") {
+    override def run(): Unit = {
+      runCompleted.set(true)
+      pushFinalReport
+      if (null != client) {
+        client.getHttpConnectionManager.asInstanceOf[MultiThreadedHttpConnectionManager].shutdown
+      }
+    }
+  })
+
   /**
    * Runs after the Flow is connected and complete() is called on it.
    */
