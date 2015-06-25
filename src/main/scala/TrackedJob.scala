@@ -48,6 +48,20 @@ class TrackedJob(args: Args) extends com.twitter.scalding.Job(args) {
     }
   }
 
+  def runTrackedJob(flow: Flow[_])(implicit mode: Mode) = {
+    try {
+      trackThisFlow(flow)
+      flow.complete
+      flow.getFlowStats.isSuccessful // return Boolean
+    } catch {
+      case t: Throwable => throw t
+    } finally {
+      // ensure all threads are cleaned up before we propagate exceptions or complete the run.
+      done.set(true)
+      Thread.sleep(100)
+    }
+  }
+
   private def trackThisFlow(f: Flow[_]): Unit = {
     val serverHostPort: Option[String] = args.optional("server")
     (new Thread(new FlowTracker(f, done, serverHostPort))).start
