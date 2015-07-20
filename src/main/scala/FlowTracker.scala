@@ -76,10 +76,6 @@ class FlowTracker(val flow: Flow[_], val runCompleted: AtomicBoolean, val hostPo
   Runtime.getRuntime.addShutdownHook(new Thread("FlowTracker-ShutdownHook") {
     override def run(): Unit = {
       runCompleted.set(true)
-      pushFinalReport
-      if (null != client) {
-        client.getHttpConnectionManager.asInstanceOf[MultiThreadedHttpConnectionManager].shutdown
-      }
     }
   })
 
