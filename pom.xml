@@ -16,7 +16,7 @@
     <!-- Users should adjust to match their own distribution and build -->
     <scala.version>2.10.4</scala.version>
     <!-- Users should adjust to match their own distribution and build -->
-    <hadoop.version>2.5.0-cdh5.3.0</hadoop.version>
+    <hadoop.version>2.6.0-mr1-cdh5.4.4</hadoop.version>
     <!-- Users should adjust to match their own distribution and build -->
     <cascading.version>2.6.1</cascading.version>
   </properties>
